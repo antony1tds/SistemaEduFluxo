@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Portaria</title>
 </head>
 <body>
-    
+    <div class="box">
+       <p>Usuário:</p>
+       <input type="text" placeholder="Digite Seu Usuário" id="usuario">
+       <p>Senha:</p>
+       <input type="password" placeholder="Digite Sua Senha" id="senha"> 
+       <button class="Entrar">Entrar</button>
+
+    </div>
+ 
+
+    <style>
+        html, body{
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, black 30%, blue 70%);
+        }
+        .box {
+            height: 67vh;
+            width: 50vw;
+            border: none;
+            gap: 4vh;
+            border-radius: 20px;
+            color: aliceblue;
+            font-size: 4.9vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            background-color: rgba(0, 0, 143, 0.8);
+        }
+        .Entrar {
+            padding: 2vh;
+            padding-left: 5vh;
+            padding-right: 5vh;
+            border-radius: 50vh;
+            margin: 6vh;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let btnEntrar = document.querySelector("Entrar");
+        btnEntrar.addEventListener("click", () => {
+
+        })
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="container">
@@ -26,12 +26,11 @@
             margin: 0;
             padding: 0;
             
-            background-color: rgba(0, 0, 0, 1);
+            background: linear-gradient(to bottom, black 30%, blue 70%);
 
         }
         .container {
             height: 86vh;
-          
             border: none;
             border-radius: 20px;
             margin: 7vh; 
@@ -42,12 +41,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center; 
-            background-color: rgba(0, 0, 143, 0.8);
+            background-color: rgba(0, 0, 143, 0.3);
         }
-        .block{
-            
-        }
-
         .prof, .aluno, .portaria{
             background-color: white;
             font-size: 25px;
@@ -72,12 +67,18 @@
     
 </body>
  <script>
-    let prof = document.getElementsByClassName("prof");
-    let aluno = document.getElementsByClassName("aluno");
-    let portaria = document.getElementsByClassName("portaria");
-    
-    btnProf.addEventListener("click", () => {
+    let prof = document.querySelector(".prof");
+    let aluno = document.querySelector(".aluno");
+    let portaria = document.querySelector(".portaria");
+
+    prof.addEventListener("click", () => {
         window.open('professores.html', '_blank')
+    })
+    aluno.addEventListener("click", () => {
+        window.open('alunos.html', '_blank')
+    })
+    portaria.addEventListener("click", () => {
+        window.open('portaria.html', '_blank')
     })
 
  </script>
