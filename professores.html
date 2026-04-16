@@ -8,11 +8,19 @@
 <body>
     <div class="box">
         <p>Usuário:</p>
-        <input type="text" placeholder="Digite Seu Usuário" id="usuario">
+        <input  class="inputs"  type="text" placeholder="Digite Seu Usuário" id="usuario" >
         <p>Senha:</p>
-        <input type="password" placeholder="Digite Sua Senha" id="senha"> 
+        <input class="inputs" type="password" placeholder="Digite Sua Senha" id="senha" > 
         <button class="Entrar">Entrar</button>
- 
+        <button class="cadastro">Cadastrar</button>
+     </div>
+
+     <div class="caixa">
+        <p>Usuário:</p>
+        <input  class="inputs"   type="text" placeholder="Digite Seu Usuário" id="usuario">
+        <p>Senha:</p>
+        <input class="inputs" type="password" placeholder="Digite Sua Senha" id="senha"> 
+        <button class="cadastro1">Cadastrar</button>
      </div>
   
  
@@ -32,7 +40,7 @@
              height: 67vh;
              width: 50vw;
              border: none;
-             gap: 4vh;
+             gap: 1vh;
              border-radius: 20px;
              color: aliceblue;
              font-size: 4.9vh;
@@ -41,7 +49,14 @@
              align-items: center;
              justify-content: center; 
              background-color: rgba(0, 0, 143, 0.8);
+         }  
+
+         .inputs{
+            border: none;
+            border-radius: 1vh;
+            font-size: 2.2vh;
          }
+
          .Entrar {
              padding: 2vh;
              padding-left: 5vh;
@@ -50,12 +65,66 @@
              margin: 6vh;
              cursor: pointer;
          }
+
+         .cadastro, .cadastro1{
+            padding: 2vh;
+             padding-left: 5vh;
+             padding-right: 5vh;
+             border-radius: 50vh;
+             margin: 1vh;
+             cursor: pointer;
+         }
+
+         .caixa{
+            
+            height: 67vh;
+             width: 50vw;
+             border: none;
+             gap: 1vh;
+             border-radius: 20px;
+             color: aliceblue;
+             font-size: 4.9vh;
+             display: none;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center; 
+             background-color: rgba(0, 0, 143, 0.8);
+         }
+
+         
      </style>
      <script>
-         let btnEntrar = document.querySelector("Entrar");
-         btnEntrar.addEventListener("click", () => {
- 
+        
+        let cadastro = document.querySelector(".caixa");
+        let login = document.querySelector(".box")
+        let btncadastro1 = document.querySelector(".cadastro1")
+        let btncadastro = document.querySelector(".cadastro")
+        let btnEntrar = document.querySelector(".Entrar");
+        btnEntrar.addEventListener("click", () => {
+            login.style.display = "none";
+                         
          })
+
+         btncadastro.addEventListener("click", () =>{
+            login.style.display = "none";
+            cadastro.style.display = "flex"
+         })
+
+         btncadastro1.addEventListener("click", () =>{
+           const input = document.getElementById("usuario","senha").value.trim();
+
+           if(!input){
+               alert("digite o usuario ou senha");
+               return
+            }
+            else{
+                alert("salvo com success")
+            }
+         })
+
+
+
+
      </script>
 </body>
 </html>
