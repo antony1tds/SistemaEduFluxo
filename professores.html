@@ -22,6 +22,18 @@
         <input class="inputs" type="password" placeholder="Digite Sua Senha" id="senha"> 
         <button class="cadastro1">Cadastrar</button>
      </div>
+
+     <div class="ocorrencia">
+        <H1> Descreva a sua ocorrência</H1>
+        <p>Nome do Aluno</p>
+        <input placeholder="Digite o Nome do Aluno" type="text" class="aluno">
+        <p>Turma do Aluno</p>
+        <input placeholder="Digite a Turma do aluno" type="text" class="turma">
+        <br><br>
+        <input type="text" placeholder="digite o que aconteceu" class="texto" >
+        <br><br>        
+        <button class="validar">enviar</button>
+     </div>
   
  
      <style>
@@ -44,7 +56,7 @@
              border-radius: 20px;
              color: aliceblue;
              font-size: 4.9vh;
-             display: flex;
+             display: none;
              flex-direction: column;
              align-items: center;
              justify-content: center; 
@@ -77,7 +89,7 @@
 
          .caixa{
             
-            height: 67vh;
+             height: 67vh;
              width: 50vw;
              border: none;
              gap: 1vh;
@@ -91,6 +103,62 @@
              background-color: rgba(0, 0, 143, 0.8);
          }
 
+         .ocorrencia{
+            background-color: darkblue;
+            height: 67vh;
+            width: 50vw;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            display: flex;
+            border: none;
+            border-radius: 2vh;
+            color: white   ;
+            
+
+         }
+
+         .aluno{
+            display: block;
+            width: 20vw;
+            border-radius: 2vh;
+            font-size: small;
+            padding: 0.75vh;
+         }
+
+         .turma{
+            display: block;
+            width: 20vw;
+            border-radius: 2vh;
+            font-size: small;
+            padding: 0.75vh;
+
+         }
+
+         .validar{
+            border-radius: 2.5vh;
+            border: none;
+            width: 10vw;
+            padding: 0.75vh;
+            cursor: pointer;
+            margin-bottom: 1hv;
+            
+         }
+
+         .texto{
+            width: 40vw;
+            height: 50vh;
+            border-radius: 2.5vh;
+            font-size: medium;
+            
+            
+            
+         }
+         .texto ::placeholder{
+           
+           display: flex;
+           
+         }
          
      </style>
      <script>
@@ -121,6 +189,8 @@
                 alert("salvo com success")
             }
          })
+
+
 
 
 
