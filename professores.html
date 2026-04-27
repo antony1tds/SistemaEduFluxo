@@ -17,10 +17,11 @@
 
      <div class="caixa">
         <p>Usuário:</p>
-        <input  class="inputs"   type="text" placeholder="Digite Seu Usuário" id="usuario">
+        <input  class="inputs"   type="text" placeholder="Digite Seu Usuário" id="usuario-cd">
         <p>Senha:</p>
-        <input class="inputs" type="password" placeholder="Digite Sua Senha" id="senha"> 
+        <input class="inputs" type="password" placeholder="Digite Sua Senha" id="senha-cd"> 
         <button class="cadastro1">Cadastrar</button>
+        <button class="login1">Tem login?</button>
      </div>
 
      <div class="ocorrencia">
@@ -29,9 +30,12 @@
         <input placeholder="Digite o Nome do Aluno" type="text" class="aluno">
         <p>Turma do Aluno</p>
         <input placeholder="Digite a Turma do aluno" type="text" class="turma">
-        <br><br>
-        <input type="text" placeholder="digite o que aconteceu" class="texto" >
-        <br><br>        
+        <p>Professor</p>
+        <input type="text" placeholder="Digite o Nome do Professor" class="prof">
+        <p>Data do Acontecimento</p>
+        <input type="date" placeholder="Data" class="date">
+        <br>
+        <input type="text" placeholder="digite o que aconteceu" class="texto" >   
         <button class="validar">enviar</button>
      </div>
   
@@ -78,7 +82,7 @@
              cursor: pointer;
          }
 
-         .cadastro, .cadastro1{
+         .cadastro, .cadastro1, .login1{
             padding: 2vh;
              padding-left: 5vh;
              padding-right: 5vh;
@@ -96,7 +100,7 @@
              border-radius: 20px;
              color: aliceblue;
              font-size: 4.9vh;
-             display: none;
+             display: flex;
              flex-direction: column;
              align-items: center;
              justify-content: center; 
@@ -105,20 +109,21 @@
 
          .ocorrencia{
             background-color: darkblue;
-            height: 67vh;
+            height: 80vh;
             width: 50vw;
             justify-content: center;
             flex-direction: column;
             align-items: center;
-            display: flex;
+            display: none;
             border: none;
             border-radius: 2vh;
-            color: white   ;
+            color: white;
+            gap: 2px;
             
 
          }
 
-         .aluno{
+         .aluno,.prof,.turma,.date{
             display: block;
             width: 20vw;
             border-radius: 2vh;
@@ -127,6 +132,14 @@
          }
 
          .turma{
+            display: block;
+            width: 20vw;
+            border-radius: 2vh;
+            font-size: small;
+            padding: 0.75vh;
+
+         }
+         .prof{
             display: block;
             width: 20vw;
             border-radius: 2vh;
@@ -150,27 +163,26 @@
             height: 50vh;
             border-radius: 2.5vh;
             font-size: medium;
-            
-            
-            
+         
          }
-         .texto ::placeholder{
-           
-           display: flex;
-           
-         }
+
          
      </style>
      <script>
         
-        let cadastro = document.querySelector(".caixa");
+        let cadastro = document.querySelector(".caixa")
         let login = document.querySelector(".box")
+        let OC = document.querySelector(".ocorrencia")
+
         let btncadastro1 = document.querySelector(".cadastro1")
         let btncadastro = document.querySelector(".cadastro")
-        let btnEntrar = document.querySelector(".Entrar");
-        btnEntrar.addEventListener("click", () => {
-            login.style.display = "none";
-                         
+        let btnEntrar = document.querySelector(".Entrar")
+        let btnValidar = document.querySelector(".validar")
+        let btnlogin = document.querySelector(".login1")
+
+         btnlogin.addEventListener("click", () => { 
+            cadastro.style.display = "none"
+            login.style.display = "flex"
          })
 
          btncadastro.addEventListener("click", () =>{
@@ -179,22 +191,79 @@
          })
 
          btncadastro1.addEventListener("click", () =>{
-           const input = document.getElementById("usuario","senha").value.trim();
+            login.style.display = "flex";
+            cadastro.style.display = "none";
+         }) 
+         
+         btncadastro1.addEventListener("click", async () =>{
+            const dadosCD = {
+               nome: cadastro.querySelector("#usuario-cd").value,
+               senha: cadastro.querySelector("#senha-cd").value
+            }
 
-           if(!input){
-               alert("digite o usuario ou senha");
-               return
+               const response = await fetch("http://localhost:1200/cadastrar",{
+                  method:'POST',
+                  headers: {"Content-type": 'application/json'},
+                  body: JSON.stringify(dadosCD)
+               })
+               const results = await response.json();
+               alert(results.mensagem)
+            })
+
+            btnEntrar.addEventListener("click", async () => {
+               const dadosLG = {
+                  usuario: login.querySelector("#usuario").value,
+                  senha: login.querySelector("#senha").value
+               }
+
+               const response = await fetch("http://localhost:1200/login",{
+                  method:'POST',
+                  headers: {"Content-type": 'application/json'},
+                  body: JSON.stringify(dadosLG)
+               })
+
+               if (response.ok) {
+                  alert("Bom acesso")
+                  login.style.display = "none";
+                  OC.style.display = "flex";
+               }
+               else{
+                  const error = await response.json()
+                  alert(error.mensagem)
+               }
+            })
+         
+
+       btnValidar.addEventListener("click", async () =>{
+            const dadosOc = {
+               aluno: document.querySelector(".aluno").value,
+               turma: document.querySelector(".turma").value,
+               professor: document.querySelector(".prof").value,
+               data: document.querySelector(".date").value,
+               motivo: document.querySelector(".texto").value,
+
             }
-            else{
-                alert("salvo com success")
+
+            try{
+               const response = await fetch("http://localhost:1200/registrar-ocorrencia",{
+                  method:'POST',
+                  headers: {"Content-type": 'application/json'},
+                  body: JSON.stringify(dadosOc)
+               })
+
+               if (!response.ok){
+                  throw new Error("erro na resposta do sv")
+               }
+            const resultado = await response.json();
+            alert(resultado.mensagem);
             }
+            catch (err) {
+               console.error("ERRO bank", err)
+               alert("erro conectar")
+            }
+
+
          })
-
-
-
-
-
-
      </script>
 </body>
 </html>
