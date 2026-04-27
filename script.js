@@ -1,6 +1,8 @@
 const mysql = require("mysql");
 const express = require("express");
 const cors = require("cors");
+const { KOI8R } = require("mysql/lib/protocol/constants/charsets");
+const e = require("express");
 
 const app = express();
 app.use(express.json());
@@ -59,6 +61,21 @@ app.post("/registrar-ocorrencia", (req, res) =>{
         }
         res.send({mensagem:"ocorrencia salva"})
     })
+})
+
+app.post("/registrar-aluno", (req, res) => {
+    const { nome, senha, turma } = req.body;
+    const query = "INSERT INTO `cadastro_aluno` (`Nome`, `Senha`, `Turma`) VALUES(?,?,?)";
+
+    connection.query(query [nome, senha, turma], (err, result) => {
+        if(err) {
+            console.log(err)
+            return res.status(500).json({mensagem: "usuario ja existente"});
+        }
+        res.json({mensagem: "aluno cadastrado"});
+
+    })
+
 })
 
 app.listen(1200, () => console.log("sv porta 1200"))
