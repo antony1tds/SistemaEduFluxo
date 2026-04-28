@@ -62,8 +62,12 @@ app.post("/registrar-ocorrencia", (req, res) =>{
 })
 
 app.post("/registrar-aluno", (req, res) => {
+
     const {nome, senha, turma} = req.body;
     const sql = "INSERT INTO `cadastro_aluno` (`Nome`, `Senha`, `Turma`) VALUES(?,?,?)";
+
+    const { nome, senha, turma } = req.body;
+    const query = "INSERT INTO `cadastro_aluno` (`Nome`, `Senha`, `Turma`) VALUES(?,?,?)";
 
     connection.query(sql, [nome, senha, turma], (err, result) => {
         if(err) {
@@ -75,6 +79,19 @@ app.post("/registrar-aluno", (req, res) => {
     })
 
 })
+
+app.listen(1200, () => console.log("sv porta 1200"))
+
+
+    connection.query(sql, [nome, senha, turma], (err, result) => {
+        if(err) {
+            console.log(err)
+            return res.status(500).json({mensagem: "usuario ja existente"});
+        }
+        res.json({mensagem: "aluno cadastrado"});
+
+    })
+
 
 app.post("/logar-aluno", (req, res) => {
     const {nome, senha} = req.body;
@@ -94,5 +111,4 @@ app.post("/logar-aluno", (req, res) => {
         }
     })
 })
-
-app.listen(1200, () => console.log("sv porta 1200"))
+app.listen(1200, () => console.log("sv porta 1200"));
