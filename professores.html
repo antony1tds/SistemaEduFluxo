@@ -201,10 +201,10 @@
                senha: cadastro.querySelector("#senha-cd").value
             }
 
-               const response = await fetch("http://localhost:1200/cadastrar",{
+               const response = await fetch("http://localhost:1200/cadastrar",{ //fetch = carteiro
                   method:'POST',
-                  headers: {"Content-type": 'application/json'},
-                  body: JSON.stringify(dadosCD)
+                  headers: {"Content-type": 'application/json'}, // ler certinho 
+                  body: JSON.stringify(dadosCD) //transforma em string
                })
                const results = await response.json();
                alert(results.mensagem)
@@ -226,6 +226,10 @@
                   alert("Bom acesso")
                   login.style.display = "none";
                   OC.style.display = "flex";
+
+                  document.getElementById("usuario").value = ""
+                  document.getElementById("senha").value = ""
+
                }
                else{
                   const error = await response.json()

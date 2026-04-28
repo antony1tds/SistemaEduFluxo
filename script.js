@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); // ler em node
 app.use(cors());
 
 const connection = mysql.createConnection({
@@ -49,9 +49,9 @@ app.post("/login", (req, res) => {
 app.post("/registrar-ocorrencia", (req, res) =>{
     const { aluno, turma, professor, data, motivo} = req.body;
 
-    const query = "INSERT INTO `ocorrências` (motivo, aluno_envolvido,professor_envolvido, data_ocorrencia,turma ) VALUES(?,?,?,?,?) ";
+    const sql = "INSERT INTO `ocorrências` (motivo, aluno_envolvido,professor_envolvido, data_ocorrencia,turma ) VALUES(?,?,?,?,?) ";
 
-    connection.query(query, [motivo, aluno,professor, data,turma ], (err, result) =>{
+    connection.query(sql, [motivo, aluno,professor, data,turma ], (err, result) =>{
         if(err){
             console.error(err);
             return res.status(500).send("erro ao salvar");
@@ -61,5 +61,38 @@ app.post("/registrar-ocorrencia", (req, res) =>{
     })
 })
 
-app.listen(1200, () => console.log("sv porta 1200"))
+app.post("/registrar-aluno", (req, res) => {
+    const {nome, senha, turma} = req.body;
+    const sql = "INSERT INTO `cadastro_aluno` (`Nome`, `Senha`, `Turma`) VALUES(?,?,?)";
 
+    connection.query(sql, [nome, senha, turma], (err, result) => {
+        if(err) {
+            console.log(err)
+            return res.status(500).json({mensagem: "usuario ja existente"});
+        }
+        res.json({mensagem: "aluno cadastrado"});
+
+    })
+
+})
+
+app.post("/logar-aluno", (req, res) => {
+    const {nome, senha} = req.body;
+    const sql = "SELECT * FROM `cadastro_aluno` WHERE `Nome` = ? AND  `Senha` = ?"
+
+    connection.query(sql, [nome, senha], (err, result ) => { // instruções para NJS -> BB
+        if(err){
+            console.error(err)
+            return res.status(500).json({mensagem: "ERRO SV"}); // erro SV / return -> parar
+        }
+
+        if (result.length > 0 ) {
+            res.json({mensagem: "aprovado"})
+        }
+        else{
+            res.status(401).json({mensagem: "INCORRETA"}) //nao autorizado
+        }
+    })
+})
+
+app.listen(1200, () => console.log("sv porta 1200"))

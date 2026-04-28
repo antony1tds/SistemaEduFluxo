@@ -14,10 +14,18 @@
         <input type="password" placeholder="Digite Sua Senha" id="senha"> 
         <p>Turma:</p>
         <input type="text" placeholder=" Digite Sua Turma" id="turma">
-        <button class="Entrar">Entrar</button>
-        
- 
-     </div>
+        <button class="Cadastrar">cadastrar</button>
+        <button class="login">ja tem login?</button>
+    </div>
+
+    <div class="caixa">
+        <p>Usuário:</p>
+        <input type="text" placeholder="Digite Seu Usuário" id="Aluno">
+        <p>Senha:</p>
+        <input type="password" placeholder="Digite Sua Senha" id="Senha"> 
+        <button class="entrar">entrar</button>
+        <button class="cadastrar">Não tem login?</button>
+    </div>
   
  
      <style>
@@ -33,33 +41,137 @@
              background: linear-gradient(to right, black 30%, blue 70%);
          }
          .box {
-             height: 67vh;
+             height: 70vh;
              width: 50vw;
              border: none;
-             
              border-radius: 20px;
              color: aliceblue;
-             font-size: 4.9vh;
+             font-size: 4vh;
              display: flex;
              flex-direction: column;
              align-items: center;
              justify-content: center; 
              background-color: rgba(0, 0, 143, 0.8);
-         }
-         .Entrar {
+         }   
+         
+         .entrar {
              padding: 2vh;
              padding-left: 5vh;
              padding-right: 5vh;
              border-radius: 50vh;
-             margin: 6vh;
+             margin: 2vh;
              cursor: pointer;
          }
+
+         .cadastrar{
+             padding: 2vh;
+             padding-left: 5vh;
+             padding-right: 5vh;
+             border-radius: 50vh;
+             margin: 2vh;
+             cursor: pointer;
+         }
+
+         .caixa {
+             height: 67vh;
+             width: 50vw;
+             border: none; 
+             border-radius: 20px;
+             color: aliceblue;
+             font-size: 4.9vh;
+             display: none;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center; 
+             background-color: rgba(0, 0, 143, 0.8);
+         }
+         .Cadastrar {
+             padding: 2vh;
+             padding-left: 5vh;
+             padding-right: 5vh;
+             border-radius: 50vh;
+             margin: 2vh;
+             cursor: pointer;
+         }
+
+        .login{
+            padding: 2vh;
+             padding-left: 5vh;
+             padding-right: 5vh;
+             border-radius: 50vh;
+             margin: 2vh;
+             cursor: pointer;
+
+        }
      </style>
-     <script>
-         let btnEntrar = document.querySelector(".Entrar");
-         btnEntrar.addEventListener("click", () => {
-                window.open("https://compassionate-bear-r831gc.mystrikingly.com/");
+     <script>              //  window.open("https://compassionate-bear-r831gc.mystrikingly.com/");
             
+         let btnCadastrar = document.querySelector(".Cadastrar");
+         let btnLogin = document.querySelector(".login")
+         let box = document.querySelector(".box")
+         let caixa = document.querySelector(".caixa")
+         let btnEntrar = document.querySelector(".entrar")
+         let btncadastrar = document.querySelector(".cadastrar")
+
+
+          btnCadastrar.addEventListener("click", () => {
+            box.style.display = "none"
+            caixa.style.display = "flex"
+        })
+         btnLogin.addEventListener("click", () => {
+            box.style.display = "none"
+            caixa.style.display = "flex"
+        })
+
+        btncadastrar.addEventListener("click", () => {
+            box.style.display = "flex"
+            caixa.style.display = "none"
+        })
+
+            btnCadastrar.addEventListener("click", async () => {
+            const dadosA = {
+                nome: document.getElementById("usuario").value,
+                senha: document.getElementById("senha").value,
+                turma: document.getElementById("turma").value
+            }
+            const response = await fetch("http://localhost:1200/registrar-aluno", {
+                method:"POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(dadosA)
+            })
+            const result = await response.json()
+            alert(result.mensagem)
+
+            if(response.ok) {
+                document.getElementById("usuario").value = ""
+                document.getElementById("senha").value = ""
+                document.getElementById("turma").value = ""
+            }
+        })
+         btnEntrar.addEventListener("click", async () => {
+               const dadosLA = {
+                  nome: caixa.querySelector("#Aluno").value,
+                  senha: caixa.querySelector("#Senha").value
+               }
+
+               const response = await fetch("http://localhost:1200/logar-aluno",{
+                  method:'POST',
+                  headers: {"Content-type": 'application/json'},
+                  body: JSON.stringify(dadosLA)
+               })
+
+               if (response.ok) {
+                alert("Bom acesso")
+                window.location.href = "https://compassionate-bear-r831gc.mystrikingly.com/";
+
+                  document.getElementById("Aluno").value = ""
+                  document.getElementById("Senha").value = ""
+
+               }
+               else{
+                  const error = await response.json()
+                  alert(error.mensagem)
+               }
             })
      </script>
 </body>
